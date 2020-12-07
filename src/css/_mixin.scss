@@ -1,0 +1,102 @@
+@function divceil($that, $divid, $unit: "em") {
+    $result: 1; 
+    @if $unit=="%" {
+        $result: ceil($that*100000/$divid)/1000;
+        @return percentage($result/100);
+    } @else {
+        @if $unit=="em" {
+            $result: ceil($that*1000/$divid)/1000;
+        } @else {
+            $result: ceil($that*100000/$divid)/1000;
+        }
+        @return $result + unquote($unit); 
+    }
+}
+@mixin mq($breakpoint: "min-width: 768px") {
+    @media screen and ($breakpoint) {
+        @content;
+    }
+}
+@mixin btnColor($set) {
+	color: map-get($set, "font");
+	&::before {
+		background: map-get($set, "bgBase");
+	}
+	> span {
+		&::after {
+			color: map-get($set, "font");
+		}
+	}
+	.isMD &:hover::before {
+		background: map-get($set, "side");
+	}
+	.isMD &:active::before, .isTD &:active::before {
+		background: map-get($set, "font");
+	}
+	&.isNoActive {
+		color: map-get($set, "bgActive");
+		> span {
+			color: map-get($set, "bgActive");
+			&::after {
+				color: map-get($set, "bgActive");
+			}
+		}
+	}
+}
+@mixin fontWeight($weight) {
+    @if $weight == "regular" {
+        font-weight: 400;
+    } @else if $weight == "bold" {
+        font-weight: 700;
+    } @else {
+        font-weight: $weight;
+    }
+}
+
+$font: source-han-sans-japanese;
+$icon: "icomoon";
+$btn: tbchibirgothicplusk-pro;
+
+$col-arr: nml, smm, atm;
+$btn-nml: (
+	font: #3c3c3c,
+	bgBase: #e2e2e2,
+	bgActive: #d0d0d0,
+	side: #a3a3a3
+);
+$btn-smm: (
+	font: #1a4c86,
+	bgBase: #e8f1fc,
+	bgActive: #c2d6ef,
+	side: #75aae6
+);
+$btn-atm: (
+	font: #6d5d18,
+	bgBase: #faf3d3,
+	bgActive: #efe0a3,
+	side: #ddc560
+);
+$btn-font: (
+	nml: map-get($btn-nml, "font"),
+	smm: map-get($btn-smm, "font"),
+	atm: map-get($btn-atm, "font"),
+);
+$btn-base: (
+	nml: map-get($btn-nml, "bgBase"),
+	smm: map-get($btn-smm, "bgBase"),
+	atm: map-get($btn-atm, "bgBase"),
+);
+$btn-active: (
+	nml: map-get($btn-nml, "bgActive"),
+	smm: map-get($btn-smm, "bgActive"),
+	atm: map-get($btn-atm, "bgActive"),
+);
+$btn-side: (
+	nml: map-get($btn-nml, "side"),
+	smm: map-get($btn-smm, "side"),
+	atm: map-get($btn-atm, "side"),
+);
+
+$black1: #1a1a1a;
+$black2: #434343;
+$gray1: #f9f9f9;
